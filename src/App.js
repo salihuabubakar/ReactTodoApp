@@ -1,5 +1,6 @@
 import { Button } from "@mui/material";
 import { useState, useEffect } from "react";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 
 const App = () => {
   const [inputText, setInputText] = useState("");
@@ -13,6 +14,10 @@ const App = () => {
    const saveToLocalStorage = (todo) => {
      localStorage.setItem("Todos", JSON.stringify(todo));
    };
+
+   const removeFromLocalStorage = (todo) => {
+     localStorage.removeItem("Todos", JSON.stringify(todo))
+   }
 
     useEffect(() => {
       let getTodoFromLocalStorage = localStorage.getItem("Todos");
@@ -37,7 +42,7 @@ const App = () => {
     }) 
     setTodos(todoRemove)
     console.log(id)
-    //saveToLocalStorage(setTodos(todos))
+    removeFromLocalStorage(todoRemove)
   }
 
 
@@ -54,7 +59,17 @@ const App = () => {
       <div className="Contents">
         <ul>
           {todos.map((item, index) => {
-           return <li id={index} key={index}>{item} <span> <Button onClick={() => removeTodoBtn(index)}>Delete</Button> </span></li>
+           return (
+             <li id={index} key={index}>
+               {item}{" "}
+               <span>
+                 {" "}
+                 <Button onClick={() => removeTodoBtn(index)}>
+                   <DeleteForeverIcon />
+                 </Button>{" "}
+               </span>
+             </li>
+           );
           })}
         </ul>
       </div>
